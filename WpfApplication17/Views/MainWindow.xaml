@@ -1,0 +1,43 @@
+﻿<Window x:Class="AdvanceTileLayout.Views.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:converters="clr-namespace:AdvanceTileLayout.Converters"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:dxe="http://schemas.devexpress.com/winfx/2008/xaml/editors"
+        xmlns:dxlc="http://schemas.devexpress.com/winfx/2008/xaml/layoutcontrol"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:models="clr-namespace:AdvanceTileLayout.Models"
+        xmlns:viewModels1="clr-namespace:AdvanceTileLayout.ViewModels"
+        Title="MainWindow"
+        Width="740"
+        Height="426"
+        WindowState="Maximized"
+        mc:Ignorable="d">
+    <Window.Resources>
+        <converters:MyConverter x:Key="Mc" />
+        <DataTemplate x:Key="ItemTemplate">
+            <dxlc:Tile Command="{Binding Command}"
+                       Header="{Binding Header}"
+                       d:DataContext="{d:DesignInstance models:TileExtended}"
+                       dxlc:TileLayoutControl.GroupHeader="{Binding GroupHeader}"
+                       dxlc:TileLayoutControl.IsFlowBreak="{Binding IsFlowBreak}" />
+        </DataTemplate>
+    </Window.Resources>
+    <Window.DataContext>
+        <viewModels1:MainWindowViewModel />
+    </Window.DataContext>
+    <Grid>
+        <dxlc:TileLayoutControl Name="TileLayoutControl1"
+                                Background="#FF0E6D38"
+                                ItemTemplate="{StaticResource ItemTemplate}"
+                                ItemsSource="{Binding Groups,
+                                                      Converter={StaticResource Mc}}" />
+        <dxe:TextEdit Name="TextEdit1"
+                      Width="150"
+                      Height="24"
+                      Margin="4,17,0,0"
+                      HorizontalAlignment="Left"
+                      VerticalAlignment="Top"
+                      EditValue="some text" />
+    </Grid>
+</Window>
